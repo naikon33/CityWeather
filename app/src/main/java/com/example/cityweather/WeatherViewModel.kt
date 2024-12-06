@@ -21,6 +21,8 @@ class WeatherViewModel : ViewModel() {
 
     private val apiService = ApiClient.apiService
 
+    private val key = "4cd80af0c77740d3bfe54507231708"
+
     fun searchCities(query: String) {
         if (query.length < 2) {
             _cities.value = emptyList()
@@ -31,10 +33,10 @@ class WeatherViewModel : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val cities = apiService.searchCities(query, "4cd80af0c77740d3bfe54507231708")
+                val cities = apiService.searchCities(query, key)
                 val citiesWithWeather = cities.map { city ->
                     async(Dispatchers.IO) {
-                        val weather = apiService.getWeather("${city.name},${city.country}", "4cd80af0c77740d3bfe54507231708")
+                        val weather = apiService.getWeather("${city.name},${city.country}", key)
                         CityWithWeather(city.id, city.name, city.country, "${weather.current.temp_c}°C")
                     }
                 }.awaitAll()
