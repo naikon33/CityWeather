@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CityWeather</string>
+    <string name="no_found">Нет данных</string>
+    <string name="find_data">Введите город</string>
+</resources>
